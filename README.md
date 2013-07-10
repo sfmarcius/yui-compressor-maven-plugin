@@ -1,0 +1,2 @@
+yui-compressor-maven-plugin
+===========================
