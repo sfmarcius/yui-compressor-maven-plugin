@@ -4,7 +4,7 @@
 
     <groupId>br.msf.maven</groupId>
     <artifactId>yui-compressor-maven-plugin</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>maven-plugin</packaging>
 
     <name>yui-compressor-maven-plugin</name>
@@ -72,18 +72,13 @@
     
     <distributionManagement>
         <repository>
-            <id>sfmarcius-releases</id>
-            <url>file:///${project.basedir}/../maven-repo/releases</url>
+            <id>maven-repo-releases</id>
+            <url>${github.maven.repo}</url>
         </repository>
         <snapshotRepository>
-            <id>sfmarcius-snapshots</id>
-            <url>file:///${project.basedir}/../maven-repo/snapshots</url>
+            <id>maven-repo-snapshots</id>
+            <uniqueVersion>false</uniqueVersion>
+            <url>${github.maven.repo}</url>
         </snapshotRepository>
     </distributionManagement>
-    <repositories>
-        <repository>
-            <id>sfmarcius-releases</id>
-            <url>https://github.com/sfmarcius/maven-repo/raw/master/releases</url>
-        </repository>
-    </repositories>    
 </project>
