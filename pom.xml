@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -10,9 +12,12 @@
     <name>yui-compressor-maven-plugin</name>
     <url>http://maven.apache.org</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <parent>
+        <groupId>br.msf</groupId>
+        <artifactId>commons-base-pom</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../commons-base-pom</relativePath>
+    </parent>
 
     <dependencies>
         <dependency>
@@ -41,12 +46,6 @@
             <artifactId>yuicompressor</artifactId>
             <version>2.4.7</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -69,16 +68,4 @@
             </plugin>
         </plugins>
     </build>
-    
-    <distributionManagement>
-        <repository>
-            <id>maven-repo-releases</id>
-            <url>${github.maven.repo}</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-repo-snapshots</id>
-            <uniqueVersion>false</uniqueVersion>
-            <url>${github.maven.repo}</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>
