@@ -14,8 +14,8 @@
  */
 package br.msf.maven.compressor;
 
-import br.msf.commons.lang.EnhancedStringBuilder;
-import br.msf.commons.lang.IStringBuilder;
+import br.msf.commons.text.EnhancedStringBuilder;
+import br.msf.commons.text.IStringBuilder;
 import br.msf.commons.util.CollectionUtils;
 import br.msf.commons.util.IOUtils;
 import br.msf.maven.compressor.processor.CssCompressor;
