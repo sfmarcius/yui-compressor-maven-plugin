@@ -13,7 +13,7 @@
 
     <groupId>br.msf.maven</groupId>
     <artifactId>yui-compressor-maven-plugin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>yui-compressor-maven-plugin</name>
