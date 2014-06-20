@@ -14,14 +14,11 @@
  */
 package br.msf.maven.compressor;
 
-import br.msf.commons.text.EnhancedStringBuilder;
-import br.msf.commons.text.IStringBuilder;
-import br.msf.commons.util.CollectionUtils;
-import br.msf.commons.util.IOUtils;
 import br.msf.maven.compressor.processor.CssCompressor;
 import br.msf.maven.compressor.processor.Compressor;
 import br.msf.maven.compressor.processor.JavaScriptCompressor;
 import br.msf.maven.utils.FileCopy;
+import br.msf.maven.utils.IOUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -30,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import org.apache.commons.collections4.CollectionUtils;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
@@ -43,7 +41,7 @@ public class CompressorService {
     /**
      * Collection of specific Minifiers.
      */
-    private List<Compressor> avaliableMinifiers = new ArrayList<Compressor>(3);
+    private final List<Compressor> avaliableMinifiers = new ArrayList<Compressor>(3);
 
     public CompressorService(final CompressorSettings settings) {
         this.settings = settings;
@@ -57,8 +55,8 @@ public class CompressorService {
         final Collection<FileCopy> minified = new ArrayList<FileCopy>(CollectionUtils.size(toMinify));
         info("Compressing " + toMinify.size() + " files...");
         this.settings.logSettings();
-        IStringBuilder jsConcatContent = new EnhancedStringBuilder();
-        IStringBuilder cssConcatContent = new EnhancedStringBuilder();
+        StringBuilder jsConcatContent = new StringBuilder();
+        StringBuilder cssConcatContent = new StringBuilder();
         for (FileCopy current : toMinify) {
             final CharSequence content;
             final Compressor minifier = getMinifierFor(current.getInput());
@@ -69,12 +67,12 @@ public class CompressorService {
                     content = current.readContents(this.settings.getEncoding());
                 }
                 if (minifier.getType().isCss() && this.settings.isCssConcat()) {
-                    cssConcatContent.appendln(content);
+                    cssConcatContent.append(content).append("\n");
                     if (this.settings.isWriteIndividualFiles()) {
                         writeContents(content, getMinifiedFile(current.getOutput()), settings.getEncoding());
                     }
                 } else if (minifier.getType().isJavascrpt() && this.settings.isJsConcat()) {
-                    jsConcatContent.appendln(content);
+                    jsConcatContent.append(content).append("\n");
                     if (this.settings.isWriteIndividualFiles()) {
                         writeContents(content, getMinifiedFile(current.getOutput()), settings.getEncoding());
                     }
@@ -86,10 +84,10 @@ public class CompressorService {
                 warn("No compressor compatible for " + current.getInput().getName() + ". Ignoring file...");
             }
         }
-        if (!cssConcatContent.isEmpty()) {
+        if (cssConcatContent.length() > 0) {
             writeContents(cssConcatContent, getMinifiedFile(this.settings.getCssConcatFile()), this.settings.getEncoding());
         }
-        if (!jsConcatContent.isEmpty()) {
+        if (jsConcatContent.length() > 0) {
             writeContents(jsConcatContent, getMinifiedFile(this.settings.getJsConcatFile()), this.settings.getEncoding());
         }
         info("Minified files........: " + minified.size());

@@ -14,10 +14,10 @@
  */
 package br.msf.maven.compressor;
 
-import br.msf.commons.util.CharSequenceUtils;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 
 /**
@@ -146,7 +146,7 @@ public class CompressorSettings {
     }
 
     public boolean isMinifiedSuffixed() {
-        return CharSequenceUtils.isNotBlank(getMinifiedSuffix());
+        return StringUtils.isNotBlank(getMinifiedSuffix());
     }
 
     public boolean isJsConcat() {

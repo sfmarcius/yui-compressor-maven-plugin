@@ -14,14 +14,13 @@
  */
 package br.msf.maven.utils;
 
-import br.msf.commons.util.CharSequenceUtils;
-import br.msf.commons.util.IOUtils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Class that contains the original input file and the target processed file
@@ -36,7 +35,7 @@ public class FileCopy {
     private final File output;
 
     public FileCopy(final String relativeFileName, final File inputDir, final File outputDir) {
-        if (CharSequenceUtils.isBlankOrNull(relativeFileName) || !IOUtils.isDirectory(inputDir) || !IOUtils.isDirectory(outputDir)) {
+        if (StringUtils.isBlank(relativeFileName) || !IOUtils.isDirectory(inputDir) || !IOUtils.isDirectory(outputDir)) {
             throw new IllegalArgumentException("Invalid argument");
         }
         this.baseDir = inputDir;

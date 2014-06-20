@@ -14,8 +14,8 @@
  */
 package br.msf.maven.compressor.processor;
 
-import br.msf.commons.util.IOUtils;
 import br.msf.maven.compressor.CompressorSettings;
+import br.msf.maven.utils.IOUtils;
 import java.io.File;
 import java.io.Reader;
 import java.io.Writer;
@@ -37,17 +37,11 @@ public class CssCompressor extends AbstractMinifier {
         return Type.CSS;
     }
 
-    /**
-     * {@inheritDoc }
-     */
     @Override
     public boolean accept(final File inputFile) {
         return IOUtils.isFile(inputFile) && (new WildcardFileFilter(CSS_WILDCARDS, IOCase.INSENSITIVE)).accept(inputFile);
     }
 
-    /**
-     * {@inheritDoc }
-     */
     @Override
     protected CharSequence proccessMinify(final CharSequence originalContent, final CompressorSettings settings) throws Exception {
         Reader reader = null;

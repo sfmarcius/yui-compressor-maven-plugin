@@ -14,9 +14,9 @@
  */
 package br.msf.maven.compressor;
 
-import br.msf.commons.util.IOUtils;
+import br.msf.maven.utils.IOUtils;
 import java.io.File;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.DirectoryScanner;

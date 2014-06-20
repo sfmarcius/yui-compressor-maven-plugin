@@ -38,17 +38,11 @@ public class JavaScriptCompressor extends AbstractMinifier {
         return Type.JAVASCRPT;
     }
 
-    /**
-     * {@inheritDoc }
-     */
     @Override
     public boolean accept(final File inputFile) {
         return inputFile != null && inputFile.isFile() && (new WildcardFileFilter(JAVASCRIPT_WILDCARDS, IOCase.INSENSITIVE)).accept(inputFile);
     }
 
-    /**
-     * {@inheritDoc }
-     */
     @Override
     protected CharSequence proccessMinify(final CharSequence originalContent, final CompressorSettings settings) throws Exception {
         Reader reader = null;

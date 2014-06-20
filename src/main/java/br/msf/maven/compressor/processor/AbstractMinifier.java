@@ -14,10 +14,9 @@
  */
 package br.msf.maven.compressor.processor;
 
-import br.msf.commons.util.ArgumentUtils;
-import br.msf.commons.util.IOUtils;
 import br.msf.maven.compressor.CompressorSettings;
 import br.msf.maven.utils.FileCopy;
+import br.msf.maven.utils.IOUtils;
 
 /**
  * Base class for FileProcessors.
@@ -32,11 +31,10 @@ public abstract class AbstractMinifier implements Compressor {
      */
     protected static final int LINE_BREAK_POS = 120;
 
-    /**
-     * {@inheritDoc }
-     */
     public CharSequence minify(final FileCopy fileCopy, final CompressorSettings settings) throws Exception {
-        ArgumentUtils.rejectIfAnyNull(fileCopy, settings.getEncoding());
+        if (fileCopy == null || settings.getEncoding() == null) {
+            throw new IllegalArgumentException("Cannot be null.");
+        }
         if (!accept(fileCopy.getInput())) {
             return null;
         }
