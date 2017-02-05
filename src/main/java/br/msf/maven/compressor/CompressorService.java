@@ -26,6 +26,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.codehaus.plexus.util.DirectoryScanner;
@@ -123,13 +125,23 @@ public class CompressorService {
         if (IOUtils.isNotDirectory(inputDir)) {
             throw new IllegalArgumentException("Invalid input dir.");
         }
-        DirectoryScanner scanner = new DirectoryScanner();
-        scanner.setCaseSensitive(false);
-        scanner.setIncludes(this.settings.getIncludes());
-        scanner.setExcludes(this.settings.getExcludes());
-        scanner.setBasedir(inputDir);
-        scanner.scan();
-        return Arrays.asList(scanner.getIncludedFiles());
+        final LinkedHashSet<String> results = new LinkedHashSet<String>();
+        if (this.settings.getIncludes() != null) {
+            for (String include : this.settings.getIncludes()) {
+                final DirectoryScanner scanner = new DirectoryScanner();
+                scanner.setCaseSensitive(false);
+                scanner.setIncludes(new String[]{include});
+                scanner.setExcludes(this.settings.getExcludes());
+                scanner.setBasedir(inputDir);
+                scanner.scan();
+                /* O new ArrayList serve para garantir que a coleção é mutável (vai saber se alguma implementação do asList() nao retorna um imutable) */
+                final List<String> tmp = new ArrayList(Arrays.asList(scanner.getIncludedFiles()));
+                /* Esse sort serve para garantir que a ordem dos arquivos retornados é previsível e independente de implementação */
+                Collections.sort(tmp);
+                results.addAll(tmp);
+            }
+        }
+        return results;
     }
 
     private void info(final CharSequence string) {
